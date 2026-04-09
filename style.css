@@ -100,15 +100,6 @@ p {
     line-height: 1.6;
 }
 
-/* ESPACIO ENTRE MISIÓN Y VISIÓN */
-.mision-text {
-    margin-bottom: 50px;
-}
-
-.vision-title {
-    margin-top: 30px;
-}
-
 /* SECCIÓN OSCURA */
 .dark {
     background: #0b1c3d;
