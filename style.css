@@ -93,13 +93,13 @@ body {
 
 h2 {
     font-size: 32px;
-    margin-bottom: 30px;
+    margin-bottom: 26px;
 }
 
 /* AGREGA ESTO */
 .section p {
     line-height: 1.6;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
 }
 
 .section h2 + p {
