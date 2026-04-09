@@ -100,13 +100,13 @@ p {
     line-height: 1.6;
 }
 
-/* ESPACIO SOLO ENTRE MISIÓN Y VISIÓN */
-#nosotros p {
-    margin-bottom: 35px;
+/* ESPACIO ENTRE MISIÓN Y VISIÓN */
+#nosotros h2 + p {
+    margin-bottom: 40px;
 }
 
-#nosotros h2:last-of-type {
-    margin-top: 20px;
+#nosotros p + h2 {
+    margin-top: 40px;
 }
 
 /* SECCIÓN OSCURA */
