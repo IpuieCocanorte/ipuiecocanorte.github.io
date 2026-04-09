@@ -101,12 +101,12 @@ p {
 }
 
 /* ESPACIO ENTRE MISIÓN Y VISIÓN */
-#nosotros h2 + p {
-    margin-bottom: 40px;
+.mision-text {
+    margin-bottom: 50px;
 }
 
-#nosotros p + h2 {
-    margin-top: 40px;
+.vision-title {
+    margin-top: 30px;
 }
 
 /* SECCIÓN OSCURA */
