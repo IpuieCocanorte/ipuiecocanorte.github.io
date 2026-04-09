@@ -8,7 +8,7 @@ window.addEventListener("scroll", function () {
     }
 });
 
-// SCROLL SUAVE MEJORADO
+// SCROLL SUAVE 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener("click", function (e) {
         e.preventDefault();
