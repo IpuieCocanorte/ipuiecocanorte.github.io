@@ -55,7 +55,7 @@ counters.forEach(counter => {
             counter.innerText = Math.ceil(current + increment);
             setTimeout(updateCounter, 30);
         } else {
-            counter.innerText = target + "+";
+            counter.innerText = target;
         }
     };
 
