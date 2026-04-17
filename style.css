@@ -47,7 +47,7 @@ body {
 .hero {
     height: 100vh;
     background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-    url('https://scontent.fmch2-1.fna.fbcdn.net/v/t39.30808-6/485380643_679914874596895_5258580508338368719_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=107&ccb=1-7&_nc_sid=2a1932&_nc_eui2=AeG06tsZamATDODtR3qv4FoVJFWhEvqeNJMkVaES-p40k6J0gdh9sibQYCqbcvDaztOUdRME7t0uE2rR665ev4H2&_nc_ohc=j1ZCkH7A2owQ7kNvwG2vaZt&_nc_oc=AdoRwZTx9dSPmzTA9g8g35VQCvD8KWRWkBuhvB3Ycw8s3HWe0tpfDqkiPZxYKtuxJes&_nc_zt=23&_nc_ht=scontent.fmch2-1.fna&_nc_gid=5akxI1jkOs5UyftU7omNlA&_nc_ss=7a3a8&oh=00_Af1jXKZkrQzV1MyJDQpzq0AQzrPfoKt6zvFpdABEFWYHLA&oe=69E4CE47') center/cover no-repeat;
+    url('img/foto portada.jpg') center/cover no-repeat;
     display: flex;
     align-items: center;
     padding: 0 10%;
