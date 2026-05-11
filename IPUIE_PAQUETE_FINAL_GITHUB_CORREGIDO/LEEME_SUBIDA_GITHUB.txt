@@ -1,0 +1,46 @@
+PAQUETE FINAL CORREGIDO - IPUIE COCA NORTE / GITHUB PAGES
+
+SUBIR EN LA RAÍZ DEL REPOSITORIO DE GITHUB PAGES:
+- .nojekyll
+- index.html
+- creencias.html
+- style.css
+- script.js
+- firebase-messaging-sw.js
+- carpeta multimedia completa
+
+NO BORRAR EN GITHUB:
+- CNAME
+- carpeta img
+- README.md si quieres conservarlo
+
+BORRAR O DEJAR DE USAR:
+- multimedia.html  (archivo viejo; ahora se usa /multimedia/)
+- firebase-messaging-sw(1).js si existiera
+- CONFIGURACION DE DOS FACTORES NAMEC.txt no debe subirse nunca
+
+RUTA CORRECTA DE LA APP:
+https://ipuiecocanorte.org/multimedia/
+
+ESTRUCTURA FINAL ESPERADA:
+/ index.html
+/ creencias.html
+/ style.css
+/ script.js
+/ firebase-messaging-sw.js
+/ .nojekyll
+/ CNAME  (debe quedar el que ya tienes en GitHub)
+/ img/   (debe quedar la carpeta que ya tienes en GitHub)
+/ multimedia/index.html
+/ multimedia/manifest.json
+/ multimedia/firebase-messaging-sw.js
+/ multimedia/icon-192.png
+/ multimedia/icon-512.png
+/ multimedia/logo-app.png
+/ multimedia/logo-ipuie.png
+
+IMPORTANTE:
+Después de subir, entra a Firebase Authentication > Settings > Authorized domains y verifica:
+- ipuiecocanorte.org
+- www.ipuiecocanorte.org
+
