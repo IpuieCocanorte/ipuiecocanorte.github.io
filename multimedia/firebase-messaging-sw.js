@@ -19,16 +19,16 @@ messaging.onBackgroundMessage((payload) => {
   const title = payload?.notification?.title || payload?.data?.title || 'IPUIE Coca Norte';
   const options = {
     body: payload?.notification?.body || payload?.data?.body || 'Tienes una nueva notificación.',
-    icon: 'icon-192.png',
-    badge: 'icon-192.png',
-    data: payload?.data || { url: 'multimedia.html' }
+    icon: '/multimedia/icon-192.png',
+    badge: '/multimedia/icon-192.png',
+    data: payload?.data || { url: '/multimedia/' }
   };
   self.registration.showNotification(title, options);
 });
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  const url = event.notification?.data?.url || 'multimedia.html';
+  const url = event.notification?.data?.url || '/multimedia/';
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
       for (const client of clientList) {
