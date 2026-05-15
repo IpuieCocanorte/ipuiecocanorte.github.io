@@ -1,7 +1,7 @@
 {
   "name": "IPUIE Coca Norte - Multimedia y Sonido",
   "short_name": "IPUIE Media",
-  "start_url": "./",
+  "start_url": "multimedia.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#06162b",

@@ -241,12 +241,33 @@ body.pwa-mode .install-btn{display:none!important;}
 .login-title{display:none!important;}
 .login .subtitle{font-size:1rem!important;margin-top:2px!important;margin-bottom:26px!important;color:#d8eaff!important;}
 @media(max-width:520px){.login-card{padding:26px 20px!important}.login-card .brand-logo{max-width:330px!important;width:96%!important}.login .subtitle{font-size:.88rem!important}}
+
+
+/* ===== Correcciones finales GitHub/dominio ===== */
+.mobile-menu-toggle{display:none;background:rgba(77,163,255,.16);border:1px solid rgba(133,196,255,.3);color:#eef6ff;border-radius:12px;width:40px;height:40px;font-size:1.25rem;font-weight:900;align-items:center;justify-content:center;cursor:pointer;margin-right:10px;flex-shrink:0}
+.login-card .brand-logo{max-height:190px!important;object-fit:contain!important;}
+.session-table small{color:var(--muted)}
+@media(max-width:760px){
+  body{padding-bottom:0!important;}
+  .app{display:block!important;}
+  .mobile-menu-toggle{display:inline-flex!important;}
+  .topbar{position:sticky!important;top:0!important;display:flex!important;flex-direction:row!important;align-items:center!important;gap:8px!important;padding:12px!important;min-height:62px!important;}
+  .topbar h2{flex:1!important;max-width:none!important;font-size:1rem!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .topbar-right{margin-left:0!important;display:flex!important;align-items:center!important;gap:6px!important;}
+  .sidebar{position:fixed!important;top:0!important;left:0!important;bottom:0!important;width:min(310px,86vw)!important;height:100dvh!important;z-index:9998!important;overflow-y:auto!important;padding:18px 14px 28px!important;transform:translateX(-105%)!important;transition:transform .22s ease!important;box-shadow:0 24px 80px rgba(0,0,0,.55)!important;background:#061b34!important;}
+  body.mobile-menu-open .sidebar{transform:translateX(0)!important;}
+  body.mobile-menu-open::after{content:'';position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:9997;pointer-events:auto;}
+  .sidebar .nav-section{display:block!important;padding:0!important;}
+  .sidebar .nav-item{min-width:0!important;height:auto!important;font-size:.88rem!important;margin-bottom:6px!important;padding:12px 14px!important;}
+  .content{padding:14px!important;}
+}
+
 </style>
 </head>
 <body style="display:none">
 <div id="login-screen" class="login">
   <div class="login-card">
-    <img class="brand-logo" src="logo-ipuie.png?v=12" alt="IPUIE Coca Norte">
+    <img class="brand-logo" src="logo-ipuie.png?v=13" alt="IPUIE Coca Norte">
     <div class="login-title">IPUIE Coca Norte</div>
     <p class="subtitle">MULTIMEDIA Y SONIDO · Gestión de turnos</p>
     <div class="field"><label>Correo</label><input id="login-email" class="input" type="email" placeholder="correo@ejemplo.com"></div>
@@ -380,7 +401,7 @@ body.pwa-mode .install-btn{display:none!important;}
               <div class="field"><label>Hora de inicio personalizada</label><input id="shift-start-custom" class="input" type="time" value="18:00"></div>
               <div class="field"><label>Hora de fin personalizada</label><input id="shift-end-custom" class="input" type="time" value="21:00"></div>
             </div>
-            <div class="field"><label>Área</label><select id="shift-area" class="select"><option>Cámara</option><option>Audio</option><option>Transmisión</option><option>Proyección</option><option>Fotografía</option><option>Redes Sociales</option><option>Dirección</option></select></div>
+            <div class="field"><label>Área</label><select id="shift-area" class="select"><option>Fotografía</option><option>Sonido</option><option>Transmisión</option><option>Proyección</option><option>Redes sociales</option><option>Cámaras</option><option>Supervisor</option></select></div>
             <button class="btn btn-primary" onclick="crearTurno()">Asignar turno</button>
           </div>
           <div class="card"><div class="card-head"><span class="card-title">Todos los turnos</span></div><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Miembro</th><th>Área</th><th>Estado</th><th>Inicio</th><th>Fin</th><th>Observación</th><th>Evidencia</th><th></th></tr></thead><tbody id="tabla-turnos-admin"></tbody></table></div></div>
@@ -406,6 +427,11 @@ body.pwa-mode .install-btn{display:none!important;}
           </div>
           <div id="reportes-resumen" class="grid grid-4" style="margin-bottom:16px"></div>
           <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Miembro</th><th>Área</th><th>Horario</th><th>Estado</th><th>Inicio</th><th>Fin</th><th>Observación</th><th>Evidencia</th></tr></thead><tbody id="tabla-reportes"></tbody></table></div>
+        </div>
+
+        <div class="card admin-only">
+          <div class="card-head"><span class="card-title">🟢 Accesos recientes a la app</span><span style="color:var(--muted);font-size:.84rem">Visible para Director General y líderes</span></div>
+          <div class="table-wrap"><table class="session-table"><thead><tr><th>Usuario</th><th>Correo</th><th>Último acceso</th><th>Dispositivo</th></tr></thead><tbody id="tabla-sesiones"></tbody></table></div>
         </div>
       </section>
 
@@ -462,7 +488,7 @@ body.pwa-mode .install-btn{display:none!important;}
   <div class="row"><div class="field"><label>Fecha de nacimiento</label><input id="member-birthdate" class="input" type="date"><div class="readonly-note">La edad se calcula automáticamente.</div></div><div class="field"><label>Edad automática</label><input id="member-age" class="input" readonly placeholder="Se calcula al guardar"></div></div>
   <div class="field"><label>Acerca de mí</label><textarea id="member-about" class="textarea" placeholder="Escribe una breve descripción personal o de servicio..."></textarea></div>
   <div class="field"><label>Habilidades</label><input id="member-skills" class="input" placeholder="Cámara, sonido, transmisión, proyección"></div>
-  <div class="row director-only"><div class="field"><label>Rol del sistema</label><select id="member-role" class="select"><option value="member">Miembro</option><option value="lider">Líder</option><option value="admin">Director General</option></select><div class="readonly-note">Este rol solo define permisos. El área del turno se asigna al crear cada turno.</div></div><div class="field"><label>Estado</label><select id="member-status" class="select"><option>Activo</option><option>Inactivo</option></select></div></div>
+  <div class="row director-only"><div class="field"><label>Rol del sistema</label><select id="member-role" class="select"><option value="miembro">Miembro</option><option value="lider">Líder</option><option value="director">Director General</option></select><div class="readonly-note">Este rol solo define permisos. El área del turno se asigna al crear cada turno.</div></div><div class="field"><label>Estado</label><select id="member-status" class="select"><option>Activo</option><option>Inactivo</option></select></div></div>
   <div class="actions"><button class="btn btn-primary" id="btn-save-member" onclick="guardarMiembro()">Guardar perfil</button><button class="btn btn-danger director-only" id="btn-delete-member-modal" onclick="deleteMemberFromModal()">Eliminar perfil</button><button class="btn" onclick="closeMemberModal()">Cancelar</button></div>
   <p style="color:var(--muted);font-size:.8rem;margin-top:14px">Puedes actualizar tu información personal visible para el equipo. El correo no se puede cambiar desde aquí.</p>
   <p class="director-only" style="color:var(--muted);font-size:.8rem;margin-top:8px">Solo el Director General puede cambiar rol del sistema, estado o eliminar perfiles.</p>
@@ -646,7 +672,7 @@ async function activarNotificacionesPush(){
 
     if(token) localStorage.setItem('fcmToken', token);
     setPushButtonState(true);
-    await mostrarNotificacionSistema('Notificaciones activadas', 'IPUIE Coca Norte ya puede mostrar avisos del sistema en este dispositivo.', {url:'./'});
+    await mostrarNotificacionSistema('Notificaciones activadas', 'IPUIE Coca Norte ya puede mostrar avisos del sistema en este dispositivo.', {url:'multimedia.html'});
     toast('Notificaciones activadas correctamente. Se envió una notificación de prueba.');
   }catch(error){
     console.error('Error activando push:', error);
@@ -668,7 +694,7 @@ window.addEventListener('focus', refreshPushButtonState);
 
 
 let currentUser = null, currentRole = 'member';
-let team = [], shifts = [], requests = [], novedades = [], notifications = [], forumMessages = [];
+let team = [], shifts = [], requests = [], novedades = [], notifications = [], forumMessages = [], userSessions = [];
 let settings = {startBeforeMinutes:0, startGraceMinutes:60, finishGraceHours:24, expiryHours:4, expiryAction:'no_cumplido', changeRequestHours:12};
 let calendarDate = new Date();
 let lastAppData = {};
@@ -771,7 +797,7 @@ auth.onAuthStateChanged(async user => {
   if(appDataUnsubscribe){ try{ appDataUnsubscribe(); }catch(e){} appDataUnsubscribe = null; }
   if(!user){
     notificationBridgeInitialized = false; knownSystemNotificationKeys = new Set();
-    team=[]; shifts=[]; requests=[]; novedades=[]; notifications=[]; forumMessages=[];
+    team=[]; shifts=[]; requests=[]; novedades=[]; notifications=[]; forumMessages=[]; userSessions=[];
     document.getElementById('login-screen').style.display='flex';
     return;
   }
@@ -861,6 +887,7 @@ function listenData(){
     notifications = normalizeArraySource(data.notifications || data.notificaciones || []);
     bridgeInternalNotificationsToSystem(notifications);
     forumMessages = normalizeArraySource(data.forumMessages || data.foro || []);
+    userSessions = normalizeArraySource(data.userSessions || []);
     settings = Object.assign({startBeforeMinutes:0, startGraceMinutes:60, finishGraceHours:24, expiryHours:4, expiryAction:'no_cumplido', changeRequestHours:12}, data.settings || {});
     autoExpireShifts(false);
     renderAll(); updateTopNotificationCount(); setTimeout(enhanceMobileTables,80);
@@ -873,24 +900,37 @@ function listenData(){
   appDataUnsubscribe = () => refApp.off('value', cb);
 }
 
+
+function firebaseKeyForTeamMember(data, idx){
+  if(data && data.key) return data.key;
+  const id = String(data?.id || '');
+  const found = team.findIndex(m=>String(m.id)===id);
+  if(found >= 0 && team[found]?.key) return team[found].key;
+  return idx >= 0 ? String(idx) : null;
+}
+
 async function saveTeamMemberSecure(data){
-  const idx = team.findIndex(m=>m.id===data.id);
+  const idx = team.findIndex(m=>m.id===data.id || (m.email||'').toLowerCase()===(data.email||'').toLowerCase());
+  const isOwnProfile = (data.email||'').toLowerCase() === currentEmail();
   if(idx < 0){
     if(!isAdminOrLeader()) throw new Error('Solo el Director General o Líder puede crear perfiles.');
     const refPush = db.ref('appData/team').push();
     data.id = data.id || refPush.key;
+    data.key = refPush.key;
     team.push(data);
-    // Guardado granular: compatible con reglas donde Líder no escribe todo appData.
     await refPush.set(data);
     return true;
   }
-  team[idx] = data;
-  if(isAdminOrLeader()){
-    await db.ref('appData/team/'+idx).set(data);
-    return true;
+  if(!isAdminOrLeader() && !isOwnProfile) throw new Error('Acceso negado: solo puedes editar tu propio perfil.');
+  const key = firebaseKeyForTeamMember(team[idx], idx);
+  data.key = team[idx].key || data.key || key;
+  // Los miembros pueden actualizar su información personal, pero conservan rol y estado definidos por Director/Líder.
+  if(!isAdminOrLeader()){
+    data.role = team[idx].role || 'Miembro';
+    data.status = team[idx].status || 'Activo';
   }
-  // Miembros: solo escriben su propio perfil en su índice, compatible con reglas avanzadas.
-  await db.ref('appData/team/'+idx).set(data);
+  team[idx] = data;
+  await db.ref('appData/team/'+key).set(data);
   return true;
 }
 async function saveShiftSecure(shift){
@@ -1000,7 +1040,17 @@ function showPage(id, el){
   if(el) el.classList.add('active');
   const titles = {perfil:'Perfil', dashboard:'Menú Inicio', 'mis-turnos':'Mis turnos', notificaciones:'Notificaciones', foro:'Chat', solicitar:'Solicitar cambio', novedades:'Novedades', equipo:'Equipo', turnos:'Crear turnos', aprobaciones:'Aprobaciones y novedades', reportes:'Reportes de turnos', calendario:'Calendario de turnos', configuracion:'Configuración', seguridad:'Seguridad de base de datos'};
   document.getElementById('page-title').textContent = titles[id] || 'IPUIE Coca Norte';
+  if(id==='foro') setLastSeen('chat');
+  if(id==='aprobaciones') setLastSeen('aprobaciones');
+  closeMobileMenu();
 }
+
+
+function toggleMobileMenu(){ document.body.classList.toggle('mobile-menu-open'); }
+function closeMobileMenu(){ document.body.classList.remove('mobile-menu-open'); }
+document.addEventListener('click', (e)=>{
+  if(document.body.classList.contains('mobile-menu-open') && !e.target.closest('.sidebar') && !e.target.closest('.mobile-menu-toggle')) closeMobileMenu();
+});
 
 function renderUserBox(){
   const nameEl = document.getElementById('user-email');
@@ -1011,7 +1061,7 @@ function renderUserBox(){
   roleEl.textContent = isAdmin() ? 'Director General' : (isLeader() ? 'Líder' : 'Miembro');
   nameEl.title = currentUser?.email || '';
 }
-function renderAll(){ applyPermissions(); renderUserBox(); renderStats(); renderDashboard(); renderOwnProfile(); renderTeam(); renderSelects(); renderMyShifts(); renderAdminShifts(); renderRequests(); renderNovedades(); renderReportes(); renderNotifications(); renderCalendar(); renderRotationSummary(); renderConfig(); renderForum(); }
+function renderAll(){ applyPermissions(); renderUserBox(); renderStats(); renderDashboard(); renderOwnProfile(); renderTeam(); renderSelects(); renderMyShifts(); renderAdminShifts(); renderRequests(); renderNovedades(); renderReportes(); renderNotifications(); renderCalendar(); renderRotationSummary(); renderConfig(); renderForum(); renderUserSessions(); }
 function renderStats(){
   const setText=(id,val)=>{ const el=document.getElementById(id); if(el) el.textContent=val; };
   setText('stat-miembros', team.length);
@@ -1019,6 +1069,14 @@ function renderStats(){
   setText('stat-pendientes', requests.filter(r=>r.estado==='pendiente').length);
   setText('stat-novedades', novedades.length);
 }
+
+function lastSeenKey(name){ return 'ipuie_last_seen_'+currentEmail()+'_'+name; }
+function getLastSeen(name){ return Number(localStorage.getItem(lastSeenKey(name)) || 0); }
+function setLastSeen(name){ localStorage.setItem(lastSeenKey(name), String(Date.now())); }
+function isForumUnread(m){ return safeTimeValue(m.fecha) > getLastSeen('chat') && (m.email||m.authorEmail||'').toLowerCase() !== currentEmail(); }
+function isRequestPendingForSummary(r){ return (r.estado||'pendiente') === 'pendiente'; }
+function isNovedadUnreadForAdmin(n){ return safeTimeValue(n.fecha) > getLastSeen('aprobaciones'); }
+
 function renderDashboard(){
   const cards = document.getElementById('dashboard-cards');
   const box = document.getElementById('dashboard-resumen');
@@ -1027,9 +1085,10 @@ function renderDashboard(){
   const upcoming = shifts.filter(isUpcomingShift).sort((a,b)=>shiftDateTimeValue(a)-shiftDateTimeValue(b));
   const myUpcoming = upcoming.filter(isMyShift);
   const myRequests = requests.filter(r=>r.email===currentEmail());
-  const forumRecent = [...(forumMessages||[])].sort((a,b)=>safeTimeValue(b.fecha)-safeTimeValue(a.fecha)).slice(0,3);
-  const pendingAdmin = requests.filter(r=>r.estado==='pendiente');
-  const recentNovedades = [...(novedades||[])].sort((a,b)=>safeTimeValue(b.fecha)-safeTimeValue(a.fecha));
+  const unreadForum = [...(forumMessages||[])].filter(isForumUnread).sort((a,b)=>safeTimeValue(b.fecha)-safeTimeValue(a.fecha));
+  const forumRecent = unreadForum.slice(0,3);
+  const pendingAdmin = requests.filter(isRequestPendingForSummary);
+  const recentNovedades = [...(novedades||[])].filter(isNovedadUnreadForAdmin).sort((a,b)=>safeTimeValue(b.fecha)-safeTimeValue(a.fecha));
 
   function card(title, value, note, page, icon){
     return `<div class="stat dashboard-card" onclick="showPage('${page}')">
@@ -1047,7 +1106,7 @@ function renderDashboard(){
       card('Miembros del equipo', team.length, 'Personas registradas en el ministerio.', 'equipo', '👥'),
       card('Próximos turnos', upcoming.length, 'Turnos pendientes o en proceso desde ahora.', 'calendario', '📅'),
       card('Aprobaciones y novedades', accionPendiente, 'Solicitudes y reportes por revisar.', 'aprobaciones', '✅'),
-      card('Chat', forumMessages.length, 'Mensajes y respuestas del equipo.', 'foro', '💬')
+      card('Chat', unreadForum.length, unreadForum.length?'Mensajes nuevos sin leer.':'Sin mensajes nuevos.', 'foro', '💬')
     ].join('');
 
     const proximos = upcoming.slice(0,5).map(s=>`<li><b>${s.fecha}</b> · ${s.horario||''} · ${s.area||''} · ${s.memberName||''}</li>`).join('');
@@ -1062,12 +1121,12 @@ function renderDashboard(){
     cards.innerHTML = [
       card('Mis próximos turnos', myUpcoming.length, 'Solo los turnos que tienes asignados.', 'mis-turnos', '📅'),
       card('Mis cambios', myRequests.length, 'Solicitudes enviadas, en espera o respondidas.', 'solicitar', '🔄'),
-      card('Chat', forumRecent.length, 'Últimos mensajes del equipo.', 'foro', '💬'),
+      card('Chat', unreadForum.length, unreadForum.length?'Mensajes nuevos sin leer.':'Sin mensajes nuevos.', 'foro', '💬'),
       card('Mi perfil', 1, 'Actualiza tu información personal.', 'perfil', '👤')
     ].join('');
 
     const turnos = myUpcoming.slice(0,5).map(s=>`<li><b>${s.fecha}</b> · ${s.horario||''} · ${s.area||''}</li>`).join('');
-    const cambios = myRequests.slice(0,5).map(r=>`<li><b>${r.estado||'pendiente'}</b> · ${r.turnoTexto||'Solicitud de cambio'}</li>`).join('');
+    const cambios = myRequests.filter(isRequestPendingForSummary).slice(0,5).map(r=>`<li><b>${r.estado||'pendiente'}</b> · ${r.turnoTexto||'Solicitud de cambio'}</li>`).join('');
     const foro = forumRecent.map(f=>`<li><b>${f.title||'Mensaje'}</b> · ${f.authorName||'Equipo'}</li>`).join('');
     box.innerHTML = `<p style="margin-bottom:12px">Bienvenido. Este resumen muestra solo lo que te corresponde.</p>
       <div class="grid grid-2">
@@ -1088,7 +1147,7 @@ function renderOwnProfile(){
   const photo = m.photoData ? `<img class="profile-photo" src="${m.photoData}" alt="Foto de ${m.name||'perfil'}">` : `<div class="profile-photo-fallback">${initials(m.name)}</div>`;
   const skills = (m.skills||'').split(',').map(x=>x.trim()).filter(Boolean).map(x=>`<span class="skill-chip">${x}</span>`).join('');
   const edad = textoEdad(m.birthdate);
-  box.innerHTML = `${photo}<h3 style="text-align:center;margin-bottom:6px">${m.name||'Sin nombre'}</h3><p style="text-align:center;color:var(--muted);font-size:.85rem;margin-bottom:8px">${m.email||currentEmail()}</p>${edad?`<div style="text-align:center;margin-bottom:10px"><span class="age-chip">🎂 ${edad}</span></div>`:''}<div class="profile-about">${m.about||'Sin información personal registrada.'}</div>${m.phone?`<p style="color:var(--muted);font-size:.86rem;margin-top:10px">📞 ${m.phone}</p>`:''}${skills?`<div style="margin-top:12px">${skills}</div>`:''}<div class="actions" style="margin-top:16px;justify-content:center"><button class="btn btn-primary" onclick="editMember('${m.id}')">Editar mi perfil</button></div>`;
+  box.innerHTML = `${photo}<h3 style="text-align:center;margin-bottom:6px">${m.name||'Sin nombre'}</h3><p style="text-align:center;color:var(--muted);font-size:.85rem;margin-bottom:8px">${m.email||currentEmail()}</p>${m.birthdate?`<div style="text-align:center;margin-bottom:10px"><span class="age-chip">🎂 Nacimiento: ${m.birthdate}${edad?' · '+edad:''}</span></div>`:''}<div class="profile-about">${m.about||'Sin información personal registrada.'}</div>${m.phone?`<p style="color:var(--muted);font-size:.86rem;margin-top:10px">📞 ${m.phone}</p>`:''}${skills?`<div style="margin-top:12px">${skills}</div>`:''}<div class="actions" style="margin-top:16px;justify-content:center"><button class="btn btn-primary" onclick="editMember('${m.id}')">Editar mi perfil</button></div>`;
 }
 
 function renderTeam(){
@@ -1099,11 +1158,11 @@ function renderTeam(){
     const photo = m.photoData ? `<img class="profile-photo" src="${m.photoData}" alt="Foto de ${m.name||'perfil'}">` : `<div class="profile-photo-fallback">${initials(m.name)}</div>`;
     const skills = (m.skills||'').split(',').map(x=>x.trim()).filter(Boolean).map(x=>`<span class="skill-chip">${x}</span>`).join('');
     const edad = textoEdad(m.birthdate);
-    return `<div class="profile">${photo}<h3>${m.name||'Sin nombre'}</h3><p>${m.role||'Miembro'}<br>${m.email||''}</p><span class="badge ${m.status==='Activo'?'b-ok':'b-bad'}">${m.status||'Activo'}</span>${edad?`<div style="margin-top:8px"><span class="age-chip">🎂 ${edad}</span></div>`:''}${m.phone?`<p style="color:var(--muted);font-size:.82rem;margin-top:8px">📞 ${m.phone}</p>`:''}${m.about?`<div class="profile-about">${m.about}</div>`:''}${skills?`<div style="margin-top:8px">${skills}</div>`:''}<div class="actions" style="margin-top:12px">${canEdit?`<button class="btn btn-sm" onclick="editMember('${m.id}')">${isAdmin()?'Editar':'Editar mi perfil'}</button>`:''}${canDelete?`<button class="btn btn-danger btn-sm" onclick="deleteMember('${m.id}')">Eliminar</button>`:''}</div></div>`;
+    return `<div class="profile">${photo}<h3>${m.name||'Sin nombre'}</h3><p>${m.role||'Miembro'}<br>${m.email||''}</p><span class="badge ${m.status==='Activo'?'b-ok':'b-bad'}">${m.status||'Activo'}</span>${m.birthdate?`<div style="margin-top:8px"><span class="age-chip">🎂 Nacimiento: ${m.birthdate}${edad?' · '+edad:''}</span></div>`:''}${m.phone?`<p style="color:var(--muted);font-size:.82rem;margin-top:8px">📞 ${m.phone}</p>`:''}${m.about?`<div class="profile-about">${m.about}</div>`:''}${skills?`<div style="margin-top:8px">${skills}</div>`:''}<div class="actions" style="margin-top:12px">${canEdit?`<button class="btn btn-sm" onclick="editMember('${m.id}')">${isAdmin()?'Editar':'Editar mi perfil'}</button>`:''}${canDelete?`<button class="btn btn-danger btn-sm" onclick="deleteMember('${m.id}')">Eliminar</button>`:''}</div></div>`;
   }).join('') : `<div class="empty">Aún no hay miembros. El administrador puede agregar el primero.</div>`;
 }
 function renderSelects(){
-  const shiftMember = document.getElementById('shift-member'); if(shiftMember) shiftMember.innerHTML = team.map(m=>`<option value="${m.id}">${m.name} — ${m.role||'Miembro'}</option>`).join('');
+  const shiftMember = document.getElementById('shift-member'); if(shiftMember) shiftMember.innerHTML = '<option value="">Selecciona un miembro</option>' + team.map(m=>`<option value="${m.id}">${m.name} — ${m.role||'Miembro'}</option>`).join('');
   const reqShift = document.getElementById('req-shift'); if(reqShift){ const p=memberProfile(); const mine = p ? shifts.filter(s=>s.memberId===p.id && ['pendiente','iniciado'].includes(s.estado||'pendiente')) : []; reqShift.innerHTML = mine.length ? mine.map(s=>`<option value="${s.id}">${s.fecha} · ${s.horario} · ${s.area}</option>`).join('') : '<option value="">No tienes turnos activos para solicitar cambio</option>'; }
   const reportMember = document.getElementById('report-filter-member'); if(reportMember){ const current = reportMember.value; reportMember.innerHTML = '<option value="">Todos los miembros</option>' + team.map(m=>`<option value="${m.id}">${m.name}</option>`).join(''); reportMember.value = current; }
 }
@@ -1193,13 +1252,13 @@ function dateOnlyKey(d){
 }
 function shiftStartTime(s){
   if(!s.fecha) return null;
-  const t=parseTimeRange(s.horario);
+  const t=s.customStart ? {start:s.customStart} : parseTimeRange(s.horario);
   const d=new Date(`${s.fecha}T${t.start}:00`);
   return String(d)==='Invalid Date' ? null : d;
 }
 function shiftEndTime(s){
   if(!s.fecha) return null;
-  const t=parseTimeRange(s.horario);
+  const t=s.customEnd ? {end:s.customEnd} : parseTimeRange(s.horario);
   const d=new Date(`${s.fecha}T${t.end}:00`);
   return String(d)==='Invalid Date' ? null : d;
 }
@@ -1296,23 +1355,31 @@ function renderConfig(){
   const cr=document.getElementById('change-request-hours');
   const a=document.getElementById('expiry-action');
   if(sb) sb.value = settings.startBeforeMinutes ?? 0;
-  if(sg) sg.value = settings.startGraceMinutes || 60;
-  if(fg) fg.value = settings.finishGraceHours || 24;
-  if(h) h.value = settings.expiryHours || 4;
-  if(cr) cr.value = settings.changeRequestHours || 12;
+  if(sg) sg.value = settings.startGraceMinutes ?? 60;
+  if(fg) fg.value = settings.finishGraceHours ?? 24;
+  if(h) h.value = settings.expiryHours ?? 4;
+  if(cr) cr.value = settings.changeRequestHours ?? 12;
   if(a) a.value = settings.expiryAction || 'no_cumplido';
 }
 async function guardarConfiguracion(){
   if(!isAdmin()) return toast('Solo el administrador puede cambiar configuración');
-  settings.startBeforeMinutes = Number(document.getElementById('start-before-minutes').value)||0;
-  settings.startGraceMinutes = Number(document.getElementById('start-grace-minutes').value)||60;
-  settings.finishGraceHours = Number(document.getElementById('finish-grace-hours').value)||24;
-  settings.expiryHours = Number(document.getElementById('expiry-hours').value)||4;
-  settings.changeRequestHours = Number(document.getElementById('change-request-hours').value)||12;
-  settings.expiryAction = document.getElementById('expiry-action').value || 'no_cumplido';
-  await autoExpireShifts(false);
-  await saveData();
-  toast('Configuración guardada');
+  settings = {
+    startBeforeMinutes: Number(document.getElementById('start-before-minutes').value)||0,
+    startGraceMinutes: Number(document.getElementById('start-grace-minutes').value)||60,
+    finishGraceHours: Number(document.getElementById('finish-grace-hours').value)||24,
+    expiryHours: Number(document.getElementById('expiry-hours').value)||4,
+    changeRequestHours: Number(document.getElementById('change-request-hours').value)||12,
+    expiryAction: document.getElementById('expiry-action').value || 'no_cumplido'
+  };
+  try{
+    await db.ref('appData/settings').set(settings);
+    await autoExpireShifts(false);
+    renderConfig();
+    toast('Configuración guardada correctamente');
+  }catch(error){
+    console.error('No se pudo guardar configuración:', error);
+    toast('No se pudo guardar configuración: ' + (error.message || error));
+  }
 }
 
 function moverMes(delta){ calendarDate = new Date(calendarDate.getFullYear(), calendarDate.getMonth()+delta, 1); renderCalendar(); }
@@ -1411,6 +1478,25 @@ function renderRequests(){
   const mine = document.getElementById('mis-solicitudes'); if(mine){ const list = requests.filter(r=>r.email===currentUser?.email); mine.innerHTML = list.length ? list.map(r=>`<div class="card"><b>${r.turnoTexto}</b><p style="color:var(--muted)">${r.motivo}</p>${badgeStatus(r.estado)}</div>`).join('') : `<div class="empty">No has enviado solicitudes.</div>`; }
   const admin = document.getElementById('admin-solicitudes'); if(admin){ const list = requests.filter(r=>r.estado==='pendiente'); admin.innerHTML = list.length ? list.map(r=>`<div class="card"><b>${r.memberName}</b><p>${r.turnoTexto}</p><p style="color:var(--muted)">${r.motivo}</p><div class="actions"><button class="btn btn-success btn-sm" onclick="resolverSolicitud('${r.id}','aprobado')">Aprobar</button><button class="btn btn-danger btn-sm" onclick="resolverSolicitud('${r.id}','rechazado')">Rechazar</button></div></div>`).join('') : `<div class="empty">No hay solicitudes pendientes.</div>`; }
 }
+
+async function registrarAccesoUsuario(){
+  try{
+    if(!currentUser) return;
+    const p = memberProfile();
+    const item = {id:String(Date.now()), email:currentEmail(), name:p?.name || currentUser.displayName || currentEmail(), fecha:new Date().toISOString(), fechaTexto:new Date().toLocaleString('es-EC'), device:navigator.userAgent.slice(0,160)};
+    await db.ref('appData/userSessions').push(item);
+  }catch(e){ console.warn('No se pudo registrar acceso:', e); }
+}
+function renderUserSessions(){
+  const tbody=document.getElementById('tabla-sesiones');
+  if(!tbody) return;
+  if(!isAdminOrLeader()){ tbody.innerHTML=''; return; }
+  const byEmail={};
+  [...(userSessions||[])].sort((a,b)=>safeTimeValue(b.fecha)-safeTimeValue(a.fecha)).forEach(s=>{ if(!byEmail[(s.email||'').toLowerCase()]) byEmail[(s.email||'').toLowerCase()]=s; });
+  const list=Object.values(byEmail).slice(0,80);
+  tbody.innerHTML = list.length ? list.map(s=>`<tr><td>${s.name||''}</td><td><small>${s.email||''}</small></td><td>${s.fechaTexto||new Date(s.fecha).toLocaleString('es-EC')}</td><td><small>${(s.device||'').replace(/[<>]/g,'')}</small></td></tr>`).join('') : `<tr><td colspan="4" class="empty">Aún no hay accesos registrados.</td></tr>`;
+}
+
 function renderNovedades(){
   const mine = document.getElementById('mis-novedades'); if(mine){ const list = novedades.filter(n=>n.email===currentUser?.email).sort((a,b)=>safeTimeValue(b.fecha)-safeTimeValue(a.fecha) || String(b.id||'').localeCompare(String(a.id||''))); mine.innerHTML = list.length ? list.map(n=>`<div class="card"><b>${n.tipo}</b><p style="color:var(--muted)">${n.detalle}</p><small>${n.fecha}</small></div>`).join('') : `<div class="empty">No has reportado novedades.</div>`; }
   const admin = document.getElementById('admin-novedades'); if(admin){ admin.innerHTML = novedades.length ? [...novedades].sort((a,b)=>safeTimeValue(b.fecha)-safeTimeValue(a.fecha)).map(n=>`<div class="card"><b>${n.memberName} · ${n.tipo}</b><p style="color:var(--muted)">${n.detalle}</p><small>${n.fecha}</small></div>`).join('') : `<div class="empty">No hay novedades.</div>`; }
@@ -1634,13 +1720,28 @@ async function deleteMember(id){
 }
 async function crearTurno(){
   if(!isAdminOrLeader()) return toast('Solo el Director General o Líder puede crear turnos');
-  const member = team.find(m=>m.id===document.getElementById('shift-member').value); if(!member) return toast('Agrega primero un miembro');
-  const shift = {id:String(Date.now()), memberId:member.id, memberName:member.name, memberEmail:member.email, fecha:document.getElementById('shift-date').value, horario:buildShiftHorario(), area:document.getElementById('shift-area').value, estado:'pendiente'};
-  if(!shift.fecha) return toast('Selecciona una fecha');
-  if(!shift.horario) return;
+  const member = team.find(m=>m.id===document.getElementById('shift-member').value);
+  if(!member) return toast('Agrega primero un miembro');
+  const horario = buildShiftHorario();
+  const fecha = document.getElementById('shift-date').value;
+  if(!fecha) return toast('Selecciona una fecha');
+  if(!horario) return;
+  const shift = {id:String(Date.now()), memberId:member.id, memberName:member.name, memberEmail:member.email, fecha, horario, area:document.getElementById('shift-area').value, estado:'pendiente'};
+  if(document.getElementById('shift-time').value === 'custom'){
+    shift.customStart = document.getElementById('shift-start-custom')?.value || '';
+    shift.customEnd = document.getElementById('shift-end-custom')?.value || '';
+  }
   try{
     await pushSecure('shifts', shift, shifts, false);
     await createNotificationPersist(member.email, 'Turno asignado', `Te asignaron ${shift.area} para ${shift.fecha} · ${shift.horario}`, 'turno');
+    // Limpia el formulario después de crear para evitar repetir miembro/fecha por accidente.
+    document.getElementById('shift-member').value = '';
+    document.getElementById('shift-date').value = '';
+    document.getElementById('shift-time').value = 'Miércoles 18:00–21:00';
+    document.getElementById('shift-start-custom').value = '18:00';
+    document.getElementById('shift-end-custom').value = '21:00';
+    document.getElementById('shift-area').value = 'Fotografía';
+    toggleCustomShiftTime();
     toast('Turno creado y notificación interna enviada');
   }catch(error){
     console.error('No se pudo crear turno:', error);
@@ -1814,8 +1915,8 @@ function setupPWA(){
     const manifest = {
       name:'IPUIE Coca Norte - Multimedia y Sonido',
       short_name:'IPUIE Multimedia',
-      start_url:'.',
-      scope:'.',
+      start_url:'multimedia.html',
+      scope:'./',
       display:'standalone',
       background_color:'#071b34',
       theme_color:'#0b2c57',
